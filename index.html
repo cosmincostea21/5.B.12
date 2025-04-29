@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+        }
+        form {
+          max-width: 300px;
+        }
+        input {
+          display: block;
+          width: 100%;
+          margin-bottom: 10px;
+          padding: 8px;
+        }
+        .error {
+          color: red;
+          margin-bottom: 10px;
+        }
+      </style>
+
+
+
+</head>
+
+<body>
+    <script>
+        /* 
+        Crear un script que coja la hora del sistema y 
+        la muestre y si es antes de las 12:00 empiece con buenos días y si es después con “Buenas Tardes.
+        Utilizar este código para averiguar la hora:
+        */
+
+        let d = new Date();
+        let hora = d.getHours() + ":" + d.getMinutes();
+        let saludo = (d.getHours < 12) ? "Buenos días" : "Buenas tardes";
+        document.write(saludo + " " + hora);
+
+        /*
+        Crear un script que imprima el HTML 
+        genere automáticamente una tabla con la conversión de euros a pesetas,
+         las cantidades de 1 a 10 euros, una en cada fila.
+        */
+        let euros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let pesetas = euros.map(euro => euro * 166.386); // Pesetas es un array que contiene la conversión de euros a pesetas
+        document.write("<table border='1'>"); // document.write es una función que escribe directamente en el HTML
+        document.write("<tr><th>Euros</th><th>Pesetas</th></tr>");
+        for (let i = 0; i < euros.length; i++) {
+            document.write("<tr><td>" + euros[i] + "</td><td>" + pesetas[i] + "</td></tr>");
+        }
+        document.write("</table>");
+
+        function mostrar() {
+            let x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function validarFecha() {
+            // Obtener la fecha de hoy en formato yyyy-mm-dd
+            let fechaHoy = new Date().toISOString().slice(0, 10);
+            let fechaReserva = document.getElementById("fechaReserva").value;
+
+            // Comparar las fechas
+            if (fechaReserva < fechaHoy) {
+                alert("La fecha de reserva no puede ser anterior a la fecha de hoy (" + fechaHoy + ").");
+                return false; // Evitar el envío del formulario
+            }
+
+            alert("Fecha de reserva válida: " + fechaReserva);
+            return true; // Permitir el envío del formulario
+        }
+
+        document.getElementById("registroForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evita el envío si hay errores
+
+            const usuario = document.getElementById("usuario").value;
+            const contrasena = document.getElementById("contrasena").value;
+            const repetirContrasena = document.getElementById("repetirContrasena").value;
+            const mensajeError = document.getElementById("mensajeError");
+
+            mensajeError.textContent = ""; // Limpiar mensaje anterior
+
+            if (usuario.length < 5) {
+                mensajeError.textContent = "El nombre de usuario debe tener al menos 5 caracteres.";
+            } else if (contrasena !== repetirContrasena) {
+                mensajeError.textContent = "Las contraseñas no coinciden.";
+            } else {
+                alert("Formulario enviado correctamente.");
+                // Aquí podrías enviar el formulario con AJAX o redirigir
+                // this.submit(); // solo si no usas `event.preventDefault()`
+            }
+        });
+
+
+    </script>
+    <br>
+    <br>
+    <label for="myInput">Contraseña: </label>
+    <input type="password" id="myInput" value="">
+    <button onclick="mostrar()">Mostrar contraseña</button>
+    <br><br>
+
+    <h1>Formulario de Reserva de Hotel</h1>
+    <form onsubmit="return validarFecha()">
+        <label for="fechaReserva">Fecha de Reserva:</label>
+        <input type="date" id="fechaReserva" name="fechaReserva" required>
+        <br><br>
+        <button type="submit">Reservar</button>
+    </form>
+
+    <h2>Registro</h2>
+    <form id="registroForm">
+      <input type="text" id="usuario" placeholder="Usuario" required>
+      <input type="password" id="contrasena" placeholder="Contraseña" required>
+      <input type="password" id="repetirContrasena" placeholder="Repetir Contraseña" required>
+      <div class="error" id="mensajeError"></div>
+      <button type="submit">Registrarse</button>
+    </form>
+
+</body>
+
+</html>
