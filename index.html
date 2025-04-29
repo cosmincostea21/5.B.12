@@ -40,12 +40,21 @@
         la muestre y si es antes de las 12:00 empiece con buenos días y si es después con “Buenas Tardes.
         Utilizar este código para averiguar la hora:
         */
-
         let d = new Date();
-        let hora = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-        let saludo = (d.getHours() < 12) ? "Buenos días" : "Buenas tardes";
-        document.write(saludo + " " + hora);
 
+        // Función para formatear con dos dígitos
+        function dosDigitos(num) {
+            return num.toString().padStart(2, '0');
+        }
+
+        let horas = dosDigitos(d.getHours());
+        let minutos = dosDigitos(d.getMinutes());
+        let segundos = dosDigitos(d.getSeconds());
+
+        let hora = `${horas}:${minutos}:${segundos}`;
+        let saludo = (d.getHours() < 12) ? "Buenos días" : "Buenas tardes";
+
+        document.write(saludo + " " + hora);
 
         /*
         Crear un script que imprima el HTML 
